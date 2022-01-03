@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/MieMilvang/DISYSMockExam/Proto"
+	Proto "github.com/MieMilvang/DISYSMockExam/Proto"
 	"google.golang.org/grpc"
 )
 

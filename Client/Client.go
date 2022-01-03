@@ -6,7 +6,7 @@ import (
 	"fmt"
 
 	h "github.com/MieMilvang/DISYSMockExam/HelperMethod"
-	"github.com/MieMilvang/DISYSMockExam/Proto"
+	Proto "github.com/MieMilvang/DISYSMockExam/Proto"
 	"google.golang.org/grpc"
 )
 
@@ -49,7 +49,7 @@ func (u *User) ListenForInput(client Proto.ProtoServiceClient, ctx context.Conte
 				response, err := client.GetValue(ctx, &Proto.GetRequest{})
 				h.CheckError(err, "ListenForInput getvalue")
 				fmt.Println(response)
-			case "setvalue":
+			case "increment":
 				fmt.Println("Choose a none 0, integer you want to set the value")
 				var value int64
 				fmt.Scanln(&value)
@@ -57,9 +57,9 @@ func (u *User) ListenForInput(client Proto.ProtoServiceClient, ctx context.Conte
 					fmt.Println("try a none 0 integer")
 					break
 				}
-				response, err := client.SetValue(ctx, &Proto.SetRequest{UserId: u.userId, RequestedValue: value})
+				response, err := client.Increment(ctx, &Proto.SetRequest{UserId: u.userId, RequestedValue: value})
 				h.CheckError(err, "ListenForInput setvalue")
-				fmt.Println(response.GetMsg())
+				fmt.Println(response.GetCurrentValue())
 			default:
 				fmt.Printf("unrecognised command: %v\n", input)
 				fmt.Println("try, 'setvalue', 'getvalue', or 'joinchat'")
